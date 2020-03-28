@@ -1,0 +1,65 @@
+---
+title: "Auto process NY Covid"
+author: "John Minter"
+date: "2020-03-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment=NA)
+library(dplyr)
+library(tibble)
+library(here)
+library(scales)
+library(ggplot2)
+library(RCurl)
+
+```
+
+```{r whereAmI}
+print(getwd())
+```
+
+```{r getNewYorkData}
+pa <- paste0(here(),"/us-states.csv")
+# pa
+df <- read.csv(pa, header = TRUE, sep = ",")
+df$date <- format(as.Date(df$date), "%m-%d")
+tib <- as_tibble(df)
+tib <- tib %>% filter(state == "New York")
+tib  %>% select(date, cases, deaths) -> new_york
+print(length(new_york$date))
+print(typeof(new_york$date[1]))
+new_york$date <- as.Date(tib$date, "%m-%d")
+head(new_york)
+tail(new_york)
+print(typeof(tib$date))
+print(tib$date)
+```
+
+```{r plotNewYork}
+plt <- ggplot(new_york, aes(x=date, y=cases)) +
+       geom_line(colour='darkred', size=2) +
+       xlab("Date") +
+       ylab("Total Cases") + 
+       ggtitle("NY COVID-19 Cases") +
+       labs(caption = 'Data from Johns Hopkins') +
+       scale_x_date() +
+       # theme_minimal() +
+       theme(axis.text=element_text(size=8),
+            axis.title=element_text(size=12),
+            plot.title=element_text(hjust = 0.5)) +
+       NULL
+
+print(plt)
+```
+
+Save the plot as a png
+
+```{r savePng, warning=FALSE, message=FALSE}
+strOutPng <- here("plt/Covid-19.png")
+
+# we want the png to be close to 1024x768...
+ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```
