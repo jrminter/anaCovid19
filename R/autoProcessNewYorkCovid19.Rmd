@@ -101,12 +101,18 @@ print(plt)
 Sadly, the curve has not flattened yet. Recall that this is for all of
 New York State and is **dominated by cases in New York City**.
 
-We will ave the plot as in the `png` format.
+We will save the plot as in both the `png` and `jpg` formats.
 
 ```{r savePng, warning=FALSE, message=FALSE}
 strOutPng <- "plt/Covid-19.png"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "plt/Covid-19.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
