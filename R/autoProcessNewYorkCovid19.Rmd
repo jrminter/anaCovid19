@@ -1,7 +1,7 @@
 ---
-title: "Auto Process NY Covid"
+title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: "Started 2020-03-27, Last modified: 2020-03-27"
+date: "Started 2020-03-27, Last modified: 2020-03-29"
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -18,29 +18,68 @@ library(here)
 library(scales)
 library(ggplot2)
 library(RCurl)
+library(kableExtra)
+```
+
+Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
+or not to print diagnostic data. The default is `FALSE`.
+
+```{r printWorkDir}
+bVerbose <- FALSE
+
+if(bVerbose){
+   print(getwd())
+}
 
 ```
 
-```{r whereAmI}
-print(getwd())
-```
+Next, load the data file and extract what we need using functions from the
+`dplyr` package to create a `tibble` of values (an enhanced R dataframe that
+works nicely with the `tidyverse` collection of R packages by Hadley Wickham.)
+We will use the `kable` function from the `knitr` package to get a nice looking
+table. We really only want the last few values...
 
 ```{r getNewYorkData}
-# pa <- paste0(here(),"/us-states.csv")
-# print(pa)
 df <- read.csv("./us-states.csv", header = TRUE, sep = ",")
 df$date <- format(as.Date(df$date), "%m-%d")
 tib <- as_tibble(df)
 tib <- tib %>% filter(state == "New York")
 tib  %>% select(date, cases, deaths) -> new_york
-print(length(new_york$date))
-print(typeof(new_york$date[1]))
+
+if(bVerbose){
+   print(length(new_york$date))
+   print(typeof(new_york$date[1]))
+}
 new_york$date <- as.Date(tib$date, "%m-%d")
-head(new_york)
-tail(new_york)
-print(typeof(tib$date))
-print(tib$date)
+
+if(bVerbose){
+   head(new_york)
+}
+
+kable(tail(new_york))
+
+if(bVerbose){
+   print(typeof(tib$date))
+   print(tib$date)
+}
 ```
+
+Next, we compute the death rate. We really only need the last value in the
+table.
+
+```{r computeDeathRate}
+
+tot_deaths <- max(tib$deaths)
+tot_cases <- max(tib$cases)
+
+death_rate_pct <- 100*tot_deaths/tot_cases
+
+death_rate_pct <- round(death_rate_pct, digits = 2)
+```
+
+New York's COVID-19 is `r death_rate_pct` percent.
+
+Next, we plot the curve.
 
 ```{r plotNewYork}
 plt <- ggplot(new_york, aes(x=date, y=cases)) +
@@ -59,7 +98,10 @@ plt <- ggplot(new_york, aes(x=date, y=cases)) +
 print(plt)
 ```
 
-Save the plot as a png
+Sadly, the curve has not flattened yet. Recall that this is for all of
+New York State and is **dominated by cases in New York City**.
+
+We will ave the plot as in the `png` format.
 
 ```{r savePng, warning=FALSE, message=FALSE}
 strOutPng <- "plt/Covid-19.png"
