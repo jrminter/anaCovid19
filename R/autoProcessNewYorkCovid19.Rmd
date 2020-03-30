@@ -21,6 +21,8 @@ library(RCurl)
 library(kableExtra)
 ```
 
+# Plot Total COVID-19 Cases
+
 Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
 or not to print diagnostic data. The default is `FALSE`.
 
@@ -81,7 +83,7 @@ New York's COVID-19 is `r death_rate_pct` percent.
 
 Next, we plot the curve.
 
-```{r plotNewYork}
+```{r plotNewYorkTotal}
 plt <- ggplot(new_york, aes(x=date, y=cases)) +
        geom_line(colour='darkred', size=2) +
        xlab("Date") +
@@ -101,16 +103,65 @@ print(plt)
 Sadly, the curve has not flattened yet. Recall that this is for all of
 New York State and is **dominated by cases in New York City**.
 
+
 We will save the plot as in both the `png` and `jpg` formats.
 
 ```{r savePng, warning=FALSE, message=FALSE}
-strOutPng <- "plt/Covid-19.png"
+strOutPng <- "plt/Covid-19-Total-Cases-NY.png"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
-strOutJpg <- "plt/Covid-19.jpg"
+strOutJpg <- "plt/Covid-19-Total-Cases-NY.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```
+
+# Plot COVID New Cases
+
+
+Make a tibble of new cases
+
+```{r testDifference}
+new_cases <- diff(tib$cases)
+the_date <- as.Date(tib$date[-1], "%m-%d")
+print(class(the_date))
+
+new_cases_tbl <- data.frame(the_date, new_cases)
+print(head(new_cases_tbl))
+print(tail(new_cases_tbl))
+```
+
+```{r plotNewYorkTotalNewCases}
+plt_new <- ggplot(new_cases_tbl, aes(x=the_date, y=new_cases)) +
+           geom_line(colour='darkred', size=2) +
+           xlab("Date") +
+           ylab("New Cases") + 
+           ggtitle("NY COVID-19 Cases") +
+           labs(caption = 'Data from Johns Hopkins') +
+           scale_x_date() +
+           theme(axis.text=element_text(size=8),
+            axis.title=element_text(size=12),
+            plot.title=element_text(hjust = 0.5)) +
+           NULL
+
+print(plt_new)
+
+```
+
+Save the New Cases Plot
+
+```{r savePngNew, warning=FALSE, message=FALSE}
+strOutPng <- "plt/Covid-19-New-Cases-NY.png"
+
+# we want the png to be close to 1024x768...
+ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "plt/Covid-19-New-Cases-NY.jpg"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
