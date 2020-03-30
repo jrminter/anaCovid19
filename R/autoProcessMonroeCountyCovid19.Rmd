@@ -60,14 +60,12 @@ tail(mc_vals)
 print(mc_vals)
 ```
 
-Next, we compute the death rate. We really only need the last value in the
-table. Monroe County doesn't have any deaths yet...
+Next, we compute the total deaths for Monroe County
 
-```
-{r computeDeathRate}
+```{r computeDeathRate}
 
-tot_deaths <- max(monroe_cty$deaths)
-tot_cases <- max(monroe_cty$cases)
+tot_deaths <- sum(monroe_cty$deaths)
+tot_cases <- sum(monroe_cty$cases)
 
 death_rate_pct <- 100*tot_deaths/tot_cases
 
@@ -75,7 +73,7 @@ death_rate_pct <- round(death_rate_pct, digits = 2)
 ```
 
 
-Monroe County's COVID-19 has no deaths yet..
+Monroe County's COVID-19 has `r tot_cases` cases and `r tot_deaths` deaths.
 
 Next, we plot the curve.
 
