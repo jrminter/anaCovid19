@@ -1,7 +1,7 @@
 ---
-title: "Auto Process NY Covid-19 Case Data"
+title: "Auto Process Monroe County Covid-19 Case Data"
 author: "John Minter"
-date: "Started 2020-03-27, Last modified: 2020-03-30"
+date: "Started 2020-03-30, Last modified: 2020-03-30"
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -39,57 +39,54 @@ works nicely with the `tidyverse` collection of R packages by Hadley Wickham.)
 We will use the `kable` function from the `knitr` package to get a nice looking
 table. We really only want the last few values...
 
-```{r getNewYorkData}
-df <- read.csv("./us-states.csv", header = TRUE, sep = ",")
+```{r getMonroeCountyData}
+df <- read.csv("./us-counties.csv", header = TRUE, sep = ",")
 df$date <- format(as.Date(df$date), "%m-%d")
 tib <- as_tibble(df)
-tib <- tib %>% filter(state == "New York")
-tib  %>% select(date, cases, deaths) -> new_york
+tib$date <- as.Date(df$date, "%m-%d")
+ny <- tib %>% filter(state == "New York")
+monroe_cty <- ny %>% filter(county == "Monroe")
+monroe_cty  %>% select(date, cases, deaths) -> mc_vals
+head(mc_vals)
+```
 
-if(bVerbose){
-   print(length(new_york$date))
-   print(typeof(new_york$date[1]))
-}
-new_york$date <- as.Date(tib$date, "%m-%d")
+```{r tailMc}
+tail(mc_vals)
+```
 
-if(bVerbose){
-   head(new_york)
-}
 
-kable(tail(new_york))
 
-if(bVerbose){
-   print(typeof(tib$date))
-   print(tib$date)
-}
+```{r listCases}
+print(mc_vals)
 ```
 
 Next, we compute the death rate. We really only need the last value in the
-table.
+table. Monroe County doesn't have any deaths yet...
 
-```{r computeDeathRate}
+```
+{r computeDeathRate}
 
-tot_deaths <- max(tib$deaths)
-tot_cases <- max(tib$cases)
+tot_deaths <- max(monroe_cty$deaths)
+tot_cases <- max(monroe_cty$cases)
 
 death_rate_pct <- 100*tot_deaths/tot_cases
 
 death_rate_pct <- round(death_rate_pct, digits = 2)
 ```
 
-New York's COVID-19 is `r death_rate_pct` percent.
+
+Monroe County's COVID-19 has no deaths yet..
 
 Next, we plot the curve.
 
 ```{r plotNewYork}
-plt <- ggplot(new_york, aes(x=date, y=cases)) +
+plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
        geom_line(colour='darkred', size=2) +
        xlab("Date") +
        ylab("Total Cases") + 
-       ggtitle("NY COVID-19 Cases") +
+       ggtitle("Monroe County COVID-19 Cases") +
        labs(caption = 'Data from Johns Hopkins') +
        scale_x_date() +
-       # theme_minimal() +
        theme(axis.text=element_text(size=8),
             axis.title=element_text(size=12),
             plot.title=element_text(hjust = 0.5)) +
@@ -98,19 +95,19 @@ plt <- ggplot(new_york, aes(x=date, y=cases)) +
 print(plt)
 ```
 
-Sadly, the curve has not flattened yet. Recall that this is for all of
-New York State and is **dominated by cases in New York City**.
+
+Sadly, Monroe County's curve has not flattened yet.
 
 We will save the plot as in both the `png` and `jpg` formats.
 
 ```{r savePng, warning=FALSE, message=FALSE}
-strOutPng <- "plt/Covid-19.png"
+strOutPng <- "plt/Monroe_Cty_Covid-19.png"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
-strOutJpg <- "plt/Covid-19.jpg"
+strOutJpg <- "plt/Monroe_Cty_Covid-19.jpg"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
