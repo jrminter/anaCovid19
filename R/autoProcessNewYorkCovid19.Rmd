@@ -88,7 +88,7 @@ plt <- ggplot(new_york, aes(x=date, y=cases)) +
        geom_line(colour='darkred', size=2) +
        xlab("Date") +
        ylab("Total Cases") + 
-       ggtitle("NY COVID-19 Cases") +
+       ggtitle("NY Total COVID-19 Cases") +
        labs(caption = 'Data from Johns Hopkins') +
        scale_x_date() +
        # theme_minimal() +
