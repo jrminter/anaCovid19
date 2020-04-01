@@ -77,20 +77,20 @@ Monroe County's COVID-19 has `r tot_cases` cases and `r tot_deaths` deaths.
 
 Next, we plot the curve.
 
-```{r plotNewYork}
-plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
-       geom_line(colour='darkred', size=2) +
-       xlab("Date") +
-       ylab("Total Cases") + 
-       ggtitle("Monroe County COVID-19 Cases") +
-       labs(caption = 'Data from Johns Hopkins') +
-       scale_x_date() +
-       theme(axis.text=element_text(size=8),
-            axis.title=element_text(size=12),
-            plot.title=element_text(hjust = 0.5)) +
-       NULL
+```{r plotMonroeCounty}
+mc_tot_plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
+              geom_line(colour='darkred', size=2) +
+              xlab("Date") +
+              ylab("Total Cases") + 
+              ggtitle("Monroe County COVID-19 Cases") +
+              labs(caption = 'Data from Johns Hopkins') +
+              scale_x_date() +
+              theme(axis.text=element_text(size=8),
+                    axis.title=element_text(size=12),
+                    plot.title=element_text(hjust = 0.5)) +
+              NULL
 
-print(plt)
+print(mc_tot_plt)
 ```
 
 
@@ -102,12 +102,12 @@ We will save the plot as in both the `png` and `jpg` formats.
 strOutPng <- "plt/Monroe_Cty_Covid-19.png"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+ggsave(mc_tot_plt, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
 strOutJpg <- "plt/Monroe_Cty_Covid-19.jpg"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
+ggsave(mc_tot_plt, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
