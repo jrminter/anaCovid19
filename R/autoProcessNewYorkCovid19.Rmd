@@ -84,20 +84,20 @@ New York's COVID-19 is `r death_rate_pct` percent.
 Next, we plot the curve.
 
 ```{r plotNewYorkTotal}
-plt <- ggplot(new_york, aes(x=date, y=cases)) +
-       geom_line(colour='darkred', size=2) +
-       xlab("Date") +
-       ylab("Total Cases") + 
-       ggtitle("NY Total COVID-19 Cases") +
-       labs(caption = 'Data from Johns Hopkins') +
-       scale_x_date() +
-       # theme_minimal() +
-       theme(axis.text=element_text(size=8),
-            axis.title=element_text(size=12),
-            plot.title=element_text(hjust = 0.5)) +
-       NULL
+plt_ny_tot <- ggplot(new_york, aes(x=date, y=cases)) +
+              geom_line(colour='darkred', size=2) +
+              xlab("Date") +
+              ylab("Total Cases") + 
+              ggtitle("NY Total COVID-19 Cases") +
+              labs(caption = 'Data from Johns Hopkins') +
+              scale_x_date() +
+              # theme_minimal() +
+              theme(axis.text=element_text(size=8),
+              axis.title=element_text(size=12),
+              plot.title=element_text(hjust = 0.5)) +
+              NULL
 
-print(plt)
+print(plt_ny_tot)
 ```
 
 Sadly, the curve has not flattened yet. Recall that this is for all of
@@ -110,33 +110,33 @@ We will save the plot as in both the `png` and `jpg` formats.
 strOutPng <- "plt/Covid-19-Total-Cases-NY.png"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+ggsave(plt_ny_tot, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
 strOutJpg <- "plt/Covid-19-Total-Cases-NY.jpg"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
+ggsave(plt_ny_tot, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
 
-# Plot COVID Deaths
+# Plot NY COVID Deaths
 
 ```{r plotNewYorkDeaths}
-plt <- ggplot(new_york, aes(x=date, y=deaths)) +
-       geom_line(colour='darkred', size=2) +
-       xlab("Date") +
-       ylab("Total Cases") + 
-       ggtitle("NY COVID-19 Deaths") +
-       labs(caption = 'Data from Johns Hopkins') +
-       scale_x_date() +
-       # theme_minimal() +
-       theme(axis.text=element_text(size=8),
-            axis.title=element_text(size=12),
-            plot.title=element_text(hjust = 0.5)) +
-       NULL
+plt_ny_deaths <- ggplot(new_york, aes(x=date, y=deaths)) +
+                 geom_line(colour='darkred', size=2) +
+                 xlab("Date") +
+                 ylab("Total NY Deaths") + 
+                 ggtitle("NY Total COVID-19 Deaths") +
+                 labs(caption = 'Data from Johns Hopkins') +
+                 scale_x_date() +
+                 # theme_minimal() +
+                 theme(axis.text=element_text(size=8),
+                 axis.title=element_text(size=12),
+                 plot.title=element_text(hjust = 0.5)) +
+                 NULL
 
-print(plt)
+print(plt_ny_deaths)
 ```
 
 We will save the plot as in both the `png` and `jpg` formats.
@@ -145,17 +145,17 @@ We will save the plot as in both the `png` and `jpg` formats.
 strOutPng <- "plt/Covid-19-Total-Deaths-NY.png"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+ggsave(plt_ny_deaths, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
 strOutJpg <- "plt/Covid-19-Total-Deaths-NY.jpg"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
+ggsave(plt_ny_deaths, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
 
-# Plot COVID New Cases
+# Plot COVID New York New Cases
 
 
 Make a tibble of new cases
@@ -171,19 +171,19 @@ print(tail(new_cases_tbl))
 ```
 
 ```{r plotNewYorkTotalNewCases}
-plt_new <- ggplot(new_cases_tbl, aes(x=the_date, y=new_cases)) +
-           geom_line(colour='darkred', size=2) +
-           xlab("Date") +
-           ylab("New Cases") + 
-           ggtitle("NY COVID-19 Cases") +
-           labs(caption = 'Data from Johns Hopkins') +
-           scale_x_date() +
-           theme(axis.text=element_text(size=8),
-            axis.title=element_text(size=12),
-            plot.title=element_text(hjust = 0.5)) +
-           NULL
+plt_ny_new_cases <- ggplot(new_cases_tbl, aes(x=the_date, y=new_cases)) +
+                    geom_line(colour='darkred', size=2) +
+                    xlab("Date") +
+                    ylab("New Cases") + 
+                    ggtitle("NY Total New COVID-19 Cases") +
+                    labs(caption = 'Data from Johns Hopkins') +
+                    scale_x_date() +
+                    theme(axis.text=element_text(size=8),
+                    axis.title=element_text(size=12),
+                    plot.title=element_text(hjust = 0.5)) +
+                    NULL
 
-print(plt_new)
+print(plt_ny_new_cases)
 
 ```
 
@@ -193,12 +193,12 @@ Save the New Cases Plot
 strOutPng <- "plt/Covid-19-New-Cases-NY.png"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutPng, width=9.0, height=6.0,
+ggsave(plt_ny_new_cases, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
 strOutJpg <- "plt/Covid-19-New-Cases-NY.jpg"
 
 # we want the png to be close to 1024x768...
-ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
+ggsave(plt_ny_new_cases, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
