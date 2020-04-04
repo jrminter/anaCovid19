@@ -28,7 +28,7 @@ Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
 or not to print diagnostic data. The default is `FALSE`.
 
 ```{r printWorkDir}
-bVerbose <- FALSE
+bVerbose <- TRUE
 
 if(bVerbose){
    print(getwd())
@@ -61,7 +61,8 @@ We will use the `kable` function from the `knitr` package to get a nice looking
 table. We really only want the last few values...
 
 ```{r getNewYorkData}
-df <- read.csv("./us-states.csv", header = TRUE, sep = ",")
+pa_states <- paste0(here(), "/us-states.csv")
+df <- read.csv(pa_states, header = TRUE, sep = ",")
 df$date <- format(as.Date(df$date), "%m-%d")
 tib <- as_tibble(df)
 tib <- tib %>% filter(state == "New York")
