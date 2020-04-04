@@ -41,8 +41,8 @@ us_counties <- read_csv(unz(temp, "covid-19-data-master/us-counties.csv"))
 path <- paste0(here(), "/us-counties.csv")
 write_csv(us_counties, path, append = FALSE, col_names=TRUE)
 us_states <- read_csv(unz(temp, "covid-19-data-master/us-states.csv"))
-path <- paste0(here(), "/us-states.csv")
-write_csv(us_states, path, append = FALSE, col_names=TRUE)
+pa_states <- paste0(here(), "/us-states.csv")
+write_csv(us_states, pa_states, append = FALSE, col_names=TRUE)
 unlink(temp)
 tail(us_counties)
 tail(us_states)
@@ -56,14 +56,15 @@ We will use the `kable` function from the `knitr` package to get a nice looking
 table. We really only want the last few values...
 
 ```{r getMonroeCountyData}
-df <- read.csv("./us-counties.csv", header = TRUE, sep = ",")
+pa_cty <- paste0(here(), "/us-counties.csv")
+df <- read.csv(pa_cty, header = TRUE, sep = ",")
 df$date <- format(as.Date(df$date), "%m-%d")
 tib <- as_tibble(df)
 tib$date <- as.Date(df$date, "%m-%d")
 ny <- tib %>% filter(state == "New York")
 monroe_cty <- ny %>% filter(county == "Monroe")
 monroe_cty  %>% select(date, cases, deaths) -> mc_vals
-head(mc_vals)
+tail(mc_vals)
 ```
 
 ```{r tailMc}
@@ -89,7 +90,8 @@ death_rate_pct <- round(death_rate_pct, digits = 2)
 ```
 
 
-Monroe County's COVID-19 has `r tot_cases` cases and `r tot_deaths` deaths.
+Monroe County's COVID-19 has `r tot_cases` cases and `r tot_deaths` deaths
+with a death rate of `r death_rate_pct` percent.
 
 Next, we plot the curve.
 
@@ -110,7 +112,7 @@ print(mc_tot_plt)
 ```
 
 
-Sadly, Monroe County's curve has not flattened yet.
+It looks like Monroe County's curve is starting to flatten.
 
 We will save the plot as in both the `png` and `jpg` formats.
 
