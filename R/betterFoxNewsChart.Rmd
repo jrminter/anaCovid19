@@ -59,7 +59,7 @@ wrote:
 
 First load the libraries
 
-```{r loadLibraries, message=FALSE}
+```{r loadLibraries, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(scales)
 library(kableExtra) # JRM addition
@@ -76,7 +76,7 @@ fox_data <- tibble(
 ```
 
 
-```{r makePlot}
+```{r makePlot, warning=FALSE}
 
 foxcol <- "#0c244a"
 foxfont <- "Montserrat"
@@ -161,7 +161,7 @@ crazyfox_trans <- function(){
 ...and here’s the result when we add this scale to our original plot, using the
 `trans = argument` of `scale_y_continuous`.
 
-```{r plotFinal}
+```{r plotFinal, warning=FALSE}
 p + 
   scale_y_continuous(trans = crazyfox_trans()) + 
   labs(caption = "Matching the eccentric scale transformation in a Fox News graphic of 4 April, with standard axis breaks") +
@@ -188,8 +188,6 @@ ggsave(p, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
 
-
-```
 
 
 
