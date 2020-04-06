@@ -1,0 +1,143 @@
+---
+title: "Auto Process CDC Data"
+author: "John Minter"
+date: "Started 2020-04-05, Last modified: 2020-04-05"
+output:
+  html_document:
+    css: ../theme/jm-gray-vignette.css
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment=NA)
+library(dplyr)
+library(readr)
+library(tibble)
+library(here)
+library(scales)
+library(ggplot2)
+library(RCurl)
+library(kableExtra)
+```
+
+# Plot 2019 Flu Data from CDC
+
+Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
+or not to print diagnostic data. The default is `FALSE`.
+
+```{r printWorkDir}
+bVerbose <- FALSE
+
+if(bVerbose){
+   print(getwd())
+}
+
+```
+
+# Load the CDC data
+
+
+
+Next, load the data file and extract what we need using functions from the
+`dplyr` package to create a `tibble` of values (an enhanced R dataframe that
+works nicely with the `tidyverse` collection of R packages by Hadley Wickham.)
+We will use the `kable` function from the `knitr` package to get a nice looking
+table. We really only want the last few values...
+
+```{r getFluData, warning=FALSE}
+pa_flu <- paste0(here(), "/R/CDC-flu-fixed.csv")
+# pa_flu
+flu <- read.csv(pa_flu, header = TRUE, sep = ",")
+flu$Date_Meas=as.Date(flu$Date_Meas)
+flu$A_Cum_Sum <- cumsum(flu$Total_A)
+flu$B_Cum_Sum <- cumsum(flu$Total_B)
+head(flu)
+```
+
+```{r printTable, warning=FALSE}
+kable(tail(flu))
+```
+
+
+Next, we plot Flu A.
+
+```{r plotFlu}
+plt_flu <- ggplot(flu) +
+           geom_line(data=flu, aes(x=Date_Meas, y=Total_A),
+                      colour="darkblue") +
+           geom_line(data=flu, aes(x=Date_Meas, y=Total_B),
+                      colour="darkred") +
+           xlab("Week (2019-2020)") +
+           ylab("Total Cases Flu") +
+           ggtitle("Fall 2019 Flu Season") +
+           labs(caption = 'Data from CDC') +
+           scale_x_date(date_breaks = "1 week", date_labels = "%W") +
+           # scale_x_date() +
+           # theme_minimal() +
+           theme(axis.text=element_text(size=8),
+                 axis.title=element_text(size=12),
+                 plot.title=element_text(hjust = 0.5)) +
+           NULL
+
+print(plt_flu)
+  
+```
+
+We will save the plot as in both the `png` and `jpg` formats.
+
+```{r savePngFlu, warning=FALSE, message=FALSE}
+strOutPng <- "plt/Flu2019-2020-Cases.png"
+
+# we want the png to be close to 1024x768...
+ggsave(plt_flu, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "plt/Flu2019-2020-Cases.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(plt_flu, file=strOutJpg, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```
+
+
+
+```{r plotFluCum}
+plt_flu_cum <- ggplot(flu) +
+               geom_line(data=flu, aes(x=Date_Meas, y=A_Cum_Sum),
+                         colour="darkblue") +
+               geom_line(data=flu, aes(x=Date_Meas, y=B_Cum_Sum),
+                         colour="darkred") +
+               xlab("Week (2019-2020)") +
+               ylab("Cumulative Cases Flu") +
+               ggtitle("Fall 2019 Flu Season") +
+               labs(caption = 'Data from CDC') +
+               scale_x_date(date_breaks = "1 week", date_labels = "%W") +
+               # scale_x_date() +
+              # theme_minimal() +
+              theme(axis.text=element_text(size=8),
+                    axis.title=element_text(size=12),
+                    plot.title=element_text(hjust = 0.5)) +
+              NULL
+
+print(plt_flu_cum)
+
+
+```
+
+We will save the plot as in both the `png` and `jpg` formats.
+
+```{r savePngFlu2, warning=FALSE, message=FALSE}
+strOutPng <- "plt/Flu2019-2020-CumCases.png"
+
+# we want the png to be close to 1024x768...
+ggsave(plt_flu_cum, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "plt/Flu2019-2020-CumCases.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(plt_flu_cum, file=strOutJpg, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```
