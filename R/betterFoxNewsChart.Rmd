@@ -173,7 +173,6 @@ p +
 
 Let's save the final plot
 
-```{r savePlt}
 
 ```{r savePng, warning=FALSE, message=FALSE}
 strOutPng <- "plt/FoxNewsCases.png"
