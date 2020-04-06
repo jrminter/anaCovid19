@@ -57,7 +57,7 @@ wrote:
 
 **JRM:** Note the elegant generation of a column of dates in `day`.
 
-First load the libraries
+# First load the libraries
 
 ```{r loadLibraries, message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -65,6 +65,7 @@ library(scales)
 library(kableExtra) # JRM addition
 ```
 
+# Generate the data
 
 ```{r makeTibble}
 fox_data <- tibble(
@@ -75,6 +76,7 @@ fox_data <- tibble(
 # kable(fox_data)
 ```
 
+# Plot the data
 
 ```{r makePlot, warning=FALSE}
 
@@ -111,6 +113,9 @@ p <- ggplot(fox_data, aes(x = day, y = cases, label = cases)) +
 print(p)
   
 ```
+
+# Improve the transformation
+
 In order to transform the vertical axis to the same, twisting and turning transformation
 implicitly used in Fox News’ version, we’ll create a new `transformation` object with the
 `scales` function `trans_new`. Each transformation in the scales paradigm goes two ways:
@@ -125,6 +130,8 @@ this.
 of the axis - this is why the label for 10,000 in scale_y_log10() is “10,000” or “1e4”, not
 “4”. So we need to tell our plotting functions that “3” on the transformed scale means 90 on
 the original, “5” means 130, and so on.
+
+# Make a `crazyfox_trans()` function
 
 Here’s the function `crazyfox_trans()` which stores both the original transform and its
 inverse:
@@ -158,6 +165,8 @@ crazyfox_trans <- function(){
 }
 ```
 
+# Put it all together
+
 ...and here’s the result when we add this scale to our original plot, using the
 `trans = argument` of `scale_y_continuous`.
 
@@ -170,6 +179,8 @@ p +
 # plot(p)
 
 ```
+
+# Save our plots
 
 Let's save the final plot
 
@@ -188,9 +199,19 @@ ggsave(p, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
 
+# The author's final comments
 
-
-
+> There we go. This noteworthy chart, re-created reproducibly with the correct
+> transformations needed to make that scale appropriate. The benefit of this 
+> approach is that I now have the crazyfox_trans() function available for future
+> use, if I need this particular weird stop-start stepwise transformation for
+> future data.
+>
+> The more serious point here is the elegance of the transform / inverse structure
+> of scales’ transformations. It’s something we take for granted (for example, in
+> getting those labels right for a logarithmic scale) and will often seem basic,
+> but as seen here gives enormous flexibility for creating new transformations
+> easily and efficiently.
 
 
 
