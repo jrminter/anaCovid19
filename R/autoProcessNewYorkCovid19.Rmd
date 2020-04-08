@@ -1,13 +1,19 @@
 ---
 title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: "Started 2020-03-27, Last modified: 2020-04-07"
+date: 'Started 2020-03-27, Last modified: 2020-04-07'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
     number_sections: yes
     toc: yes
     toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
 ---
 
 ```{r setup, include=FALSE}
