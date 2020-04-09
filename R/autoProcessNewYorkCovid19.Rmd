@@ -34,7 +34,7 @@ Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
 or not to print diagnostic data. The default is `FALSE`.
 
 ```{r printWorkDir}
-bVerbose <- FALSE
+bVerbose <- TRUE
 
 if(bVerbose){
    print(getwd())
