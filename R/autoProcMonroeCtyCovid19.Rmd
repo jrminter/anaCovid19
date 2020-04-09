@@ -101,7 +101,7 @@ mc_tot_plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
               xlab("Date") +
               ylab("Total Cases") + 
               ggtitle("Monroe County COVID-19 Cases") +
-              labs(caption = 'Data from Johns Hopkins') +
+              labs(caption = 'Data from new York Times') +
               scale_x_date() +
               theme(axis.text=element_text(size=8),
                     axis.title=element_text(size=12),
@@ -110,9 +110,6 @@ mc_tot_plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
 
 print(mc_tot_plt)
 ```
-
-
-It looks like Monroe County's curve is starting to flatten.
 
 We will save the plot as in both the `png` and `jpg` formats.
 

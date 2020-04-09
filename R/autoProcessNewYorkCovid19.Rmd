@@ -28,7 +28,7 @@ Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
 or not to print diagnostic data. The default is `FALSE`.
 
 ```{r printWorkDir}
-bVerbose <- TRUE
+bVerbose <- FALSE
 
 if(bVerbose){
    print(getwd())
@@ -109,7 +109,7 @@ plt_ny_tot <- ggplot(new_york, aes(x=date, y=cases)) +
               xlab("Date") +
               ylab("Total Cases") + 
               ggtitle("NY Total COVID-19 Cases") +
-              labs(caption = 'Data from Johns Hopkins') +
+              labs(caption = 'Data from New York Times') +
               scale_x_date() +
               # theme_minimal() +
               theme(axis.text=element_text(size=8),
@@ -148,7 +148,7 @@ plt_ny_deaths <- ggplot(new_york, aes(x=date, y=deaths)) +
                  xlab("Date") +
                  ylab("Total NY Deaths") + 
                  ggtitle("NY Total COVID-19 Deaths") +
-                 labs(caption = 'Data from Johns Hopkins') +
+                 labs(caption = 'Data from the New York Times') +
                  scale_x_date() +
                  # theme_minimal() +
                  theme(axis.text=element_text(size=8),
@@ -196,7 +196,7 @@ plt_ny_new_cases <- ggplot(new_cases_tbl, aes(x=the_date, y=new_cases)) +
                     xlab("Date") +
                     ylab("New Cases") + 
                     ggtitle("NY Total New COVID-19 Cases") +
-                    labs(caption = 'Data from Johns Hopkins') +
+                    labs(caption = 'Data from New York Times') +
                     scale_x_date() +
                     theme(axis.text=element_text(size=8),
                     axis.title=element_text(size=12),
