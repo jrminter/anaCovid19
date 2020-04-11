@@ -118,9 +118,7 @@ plt_ny_tot <- ggplot(new_york, aes(x=date, y=cases)) +
               labs(caption = 'Data from New York Times') +
               scale_x_date() +
               # theme_minimal() +
-              theme(axis.text=element_text(size=8),
-              axis.title=element_text(size=12),
-              plot.title=element_text(hjust = 0.5)) +
+              theme(axis.text=element_text(size=8),  axis.title=element_text(size=12), plot.title=element_text(hjust = 0.5)) +
               NULL
 
 print(plt_ny_tot)
