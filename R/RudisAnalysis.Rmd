@@ -60,13 +60,13 @@ print(plt)
 
 
 ```{r savePng, warning=FALSE, message=FALSE}
-strOutPng <- "plt/Rudis-Analysis.png"
+strOutPng <- "plt/Confirmed-Hospitalizations.png"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutPng, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 
-strOutJpg <- "plt/Rudis-Analysis.jpg"
+strOutJpg <- "plt/Confirmed-Hospitalizations.jpg"
 
 # we want the png to be close to 1024x768...
 ggsave(plt, file=strOutJpg, width=9.0, height=6.0,
