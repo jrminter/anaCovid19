@@ -48,7 +48,7 @@ plt <- mutate(hosp, start = mmwr_week_to_date(mmwr_year, mmwr_week)) %>%
   facet_grid(network~age_category) +
   labs( x = NULL,
         y = "Rates per 100,000 pop",
-        title = "COVID-NET Weekly Rates by Network and Age Group",
+        title = "COVID-NET Weekly Hospitalization Rates by Network and Age Group",
         caption = sprintf("Source: COVID-NET Accessed on %s",Sys.Date())) +
   theme(axis.text=element_text(size=10),
         axis.title=element_text(size=14),
