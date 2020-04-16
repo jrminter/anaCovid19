@@ -1,7 +1,7 @@
 ---
 title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-04-15'
+date: 'Started 2020-03-27, Last modified: 2020-04-16'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -105,7 +105,7 @@ death_rate_pct <- 100*tot_deaths/tot_cases
 death_rate_pct <- round(death_rate_pct, digits = 2)
 ```
 
-New York's COVID-19 is `r death_rate_pct` percent.
+New York's COVID-19 death rate is `r death_rate_pct` percent.
 
 Next, we plot the curve.
 
