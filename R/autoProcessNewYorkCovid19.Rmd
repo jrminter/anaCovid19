@@ -1,7 +1,7 @@
 ---
 title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-04-23'
+date: 'Started 2020-03-27, Last modified: 2020-04-24'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
