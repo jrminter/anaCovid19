@@ -1,7 +1,7 @@
 ---
 title: "Auto Process Monroe County Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-30, Last modified: 2020-04-27'
+date: 'Started 2020-03-30, Last modified: 2020-04-29'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -72,23 +72,12 @@ monroe_cty <- ny %>% filter(county == "Monroe")
 monroe_cty  %>% select(date, cases, deaths) -> mc_vals
 tail(mc_vals)
 ```
-
-```{r tailMc}
-tail(mc_vals)
-```
-
-
-
-```{r listCases}
-print(mc_vals)
-```
-
 Next, we compute the total deaths for Monroe County
 
 ```{r computeDeathRate}
 
-tot_deaths <- sum(monroe_cty$deaths)
-tot_cases <- sum(monroe_cty$cases)
+tot_deaths <- max(monroe_cty$deaths)
+tot_cases <- max(monroe_cty$cases)
 
 death_rate_pct <- 100*tot_deaths/tot_cases
 
