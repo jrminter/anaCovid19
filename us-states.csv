@@ -3450,8 +3450,13 @@ date,state,fips,cases,deaths
 2020-05-04,Minnesota,27,7234,428
 2020-05-04,Mississippi,28,7877,310
 2020-05-04,Missouri,29,8776,387
+<<<<<<< HEAD
 2020-05-04,Montana,30,456,16
 2020-05-04,Nebraska,31,6124,79
+=======
+2020-05-04,Montana,30,457,16
+2020-05-04,Nebraska,31,6125,79
+>>>>>>> b1175f9a8574b2bb543b2ddab3c7f097a8a97b17
 2020-05-04,Nevada,32,5627,266
 2020-05-04,New Hampshire,33,2588,86
 2020-05-04,New Jersey,34,128269,7910
@@ -3464,10 +3469,17 @@ date,state,fips,cases,deaths
 2020-05-04,Oklahoma,40,4044,238
 2020-05-04,Oregon,41,2759,109
 2020-05-04,Pennsylvania,42,52992,2880
+<<<<<<< HEAD
 2020-05-04,Puerto Rico,72,1875,54
 2020-05-04,Rhode Island,44,9652,341
 2020-05-04,South Carolina,45,6757,283
 2020-05-04,South Dakota,46,2667,21
+=======
+2020-05-04,Puerto Rico,72,1843,54
+2020-05-04,Rhode Island,44,9652,341
+2020-05-04,South Carolina,45,6757,283
+2020-05-04,South Dakota,46,2668,21
+>>>>>>> b1175f9a8574b2bb543b2ddab3c7f097a8a97b17
 2020-05-04,Tennessee,47,13343,225
 2020-05-04,Texas,48,33131,914
 2020-05-04,Utah,49,5326,50
@@ -3478,6 +3490,7 @@ date,state,fips,cases,deaths
 2020-05-04,West Virginia,54,1224,50
 2020-05-04,Wisconsin,55,8236,340
 2020-05-04,Wyoming,56,444,7
+<<<<<<< HEAD
 2020-05-05,Alabama,01,8437,315
 2020-05-05,Alaska,02,369,7
 2020-05-05,Arizona,04,9305,395
@@ -3588,3 +3601,5 @@ date,state,fips,cases,deaths
 2020-05-06,West Virginia,54,1276,51
 2020-05-06,Wisconsin,55,8901,362
 2020-05-06,Wyoming,56,631,7
+=======
+>>>>>>> b1175f9a8574b2bb543b2ddab3c7f097a8a97b17

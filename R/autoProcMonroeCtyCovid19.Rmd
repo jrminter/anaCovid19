@@ -1,7 +1,11 @@
 ---
 title: "Auto Process Monroe County Covid-19 Case Data"
 author: "John Minter"
+<<<<<<< HEAD
 date: 'Started 2020-03-30, Last modified: 2020-05-07'
+=======
+date: 'Started 2020-03-30, Last modified: 2020-05-05'
+>>>>>>> b1175f9a8574b2bb543b2ddab3c7f097a8a97b17
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
