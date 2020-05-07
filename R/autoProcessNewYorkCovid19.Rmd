@@ -1,7 +1,7 @@
 ---
 title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-05-04'
+date: 'Started 2020-03-27, Last modified: 2020-05-07'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -90,7 +90,25 @@ if(bVerbose){
    print(typeof(tib$date))
    print(tib$date)
 }
+
+# fix for error on 05-06  can't be 25956 dashboard 20828 use that
+new_york$deaths[67]=20828
 ```
+
+Note added 2020-05-07. The NYT data set showed a big spike on 2020-05-06 showed
+a spike to 25956. The NY Dashboard from 05-07 shows 20828. has to be an error...
+I manually entered that data point. Need to check with NYT.
+
+The NYT explains:
+
+> NEW: Starting with data for May 6th, this data reports the total combined
+> number of confirmed and probable Covid-19 cases and deaths where available.
+> Many states and localities have started to report this data using criteria
+> that were developed by states and the federal government.
+
+Let's see how this goes forward. I **do not like** the "probable cases" without
+justification.
+
 
 Next, we compute the death rate. We really only need the last value in the
 table.
