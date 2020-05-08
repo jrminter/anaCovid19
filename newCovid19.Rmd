@@ -1,0 +1,87 @@
+---
+title: "Auto Process NY Covid-19 Case Data"
+author: "John Minter"
+date: 'Started 2020-05-08, Last modified: 2020-05-08'
+output:
+  html_document:
+    css: ./theme/jm-gray-vignette.css
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+  word_document:
+    toc: yes
+    toc_depth: '3'
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = NA)
+library(dplyr)
+library(readr)
+library(tibble)
+library(here)
+library(scales)
+library(ggplot2)
+library(RCurl)
+library(kableExtra)
+
+bDownload <- FALSE
+bVerbose <- FALSE
+```
+
+NY Times changing data. Grrr... Try a new source...
+[here](https://github.com/datasets/covid-19/blob/master/data/us_confirmed.csv)
+
+
+
+```{r pullData}
+if(bDownload){
+   temp <- tempfile()
+   download.file("https://raw.githubusercontent.com/datasets/covid-19/master/data/us_confirmed.csv",temp)
+   data <- read_csv(temp)
+   write.csv(data,'us_confirmed.csv')
+}
+```
+
+Load the data
+
+```{r loadData}
+data <- read_csv("us_confirmed.csv")
+summary(data)
+tail(data)
+```
+
+
+Get what we need
+
+```{r getSubset}
+tib <- as_tibble(data)
+tib <- tib %>% filter(`Province/State` == "New York")
+write.csv(tib,'long_new_york.csv')
+
+new_york <- tib  %>% select(Date, Case) 
+write.csv(new_york,'new_york.csv')
+```
+
+The total number of cases in NY is `r max(new_york$Case)`
+
+Next, we plot the curve.
+
+```{r plotNewYorkTotal}
+plt_ny_tot <- ggplot(new_york, aes(x=Date, y=Case)) +
+              geom_line(colour='darkred', size=2) +
+              xlab("Date") +
+              ylab("Total Cases") + 
+              ggtitle("NY Total COVID-19 Cases") +
+              labs(caption = 'Data from Johns Hopkins') +
+              scale_x_date() +
+              # theme_minimal() +
+              theme(axis.text=element_text(size=8),
+                    axis.title=element_text(size=12),
+                    plot.title=element_text(hjust = 0.5)) +
+              NULL
+
+print(plt_ny_tot)
+```

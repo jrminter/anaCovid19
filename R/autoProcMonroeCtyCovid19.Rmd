@@ -1,11 +1,7 @@
 ---
 title: "Auto Process Monroe County Covid-19 Case Data"
 author: "John Minter"
-<<<<<<< HEAD
-date: 'Started 2020-03-30, Last modified: 2020-05-07'
-=======
-date: 'Started 2020-03-30, Last modified: 2020-05-05'
->>>>>>> b1175f9a8574b2bb543b2ddab3c7f097a8a97b17
+date: 'Started 2020-03-30, Last modified: 2020-05-08'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -37,6 +33,7 @@ or not to print diagnostic data. The default is `FALSE`.
 
 ```{r printWorkDir}
 bVerbose <- FALSE
+bDownload <- FALSE
 
 if(bVerbose){
    print(getwd())
@@ -45,17 +42,19 @@ if(bVerbose){
 ```
 
 ```{r pullData}
-temp <- tempfile()
-download.file("https://github.com/nytimes/covid-19-data/archive/master.zip",temp)
-us_counties <- read_csv(unz(temp, "covid-19-data-master/us-counties.csv"))
-path <- paste0(here(), "/us-counties.csv")
-write_csv(us_counties, path, append = FALSE, col_names=TRUE)
-us_states <- read_csv(unz(temp, "covid-19-data-master/us-states.csv"))
-pa_states <- paste0(here(), "/us-states.csv")
-write_csv(us_states, pa_states, append = FALSE, col_names=TRUE)
-unlink(temp)
-tail(us_counties)
-tail(us_states)
+if(bDownload){
+  temp <- tempfile()
+  download.file("https://github.com/nytimes/covid-19-data/archive/master.zip",temp)
+  us_counties <- read_csv(unz(temp, "covid-19-data-master/us-counties.csv"))
+  path <- paste0(here(), "/us-counties.csv")
+  write_csv(us_counties, path, append = FALSE, col_names=TRUE)
+  us_states <- read_csv(unz(temp, "covid-19-data-master/us-states.csv"))
+  pa_states <- paste0(here(), "/us-states.csv")
+  write_csv(us_states, pa_states, append = FALSE, col_names=TRUE)
+  unlink(temp)
+  tail(us_counties)
+  tail(us_states)
+}
 
 ```
 

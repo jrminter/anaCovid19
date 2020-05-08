@@ -1,7 +1,7 @@
 ---
 title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-05-07'
+date: 'Started 2020-03-27, Last modified: 2020-05-08'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -33,8 +33,9 @@ library(kableExtra)
 Set up the analysis. Use the `bVerbose` variable as a flag to decide whether
 or not to print diagnostic data. The default is `FALSE`.
 
-```{r printWorkDir}
-bVerbose <- TRUE
+```{r setupFlags}
+bVerbose <- FALSE
+bDownload <- FALSE
 
 if(bVerbose){
    print(getwd())
@@ -46,17 +47,19 @@ Pull down the data
 
 
 ```{r pullData}
-temp <- tempfile()
-download.file("https://github.com/nytimes/covid-19-data/archive/master.zip",temp)
-us_counties <- read_csv(unz(temp, "covid-19-data-master/us-counties.csv"))
-path <- paste0(here(), "/us-counties.csv")
-write_csv(us_counties, path, append = FALSE, col_names=TRUE)
-us_states <- read_csv(unz(temp, "covid-19-data-master/us-states.csv"))
-path <- paste0(here(), "/us-states.csv")
-write_csv(us_states, path, append = FALSE, col_names=TRUE)
-unlink(temp)
-tail(us_counties)
-tail(us_states)
+if(bDownload){
+  temp <- tempfile()
+  download.file("https://github.com/nytimes/covid-19-data/archive/master.zip",temp)
+  us_counties <- read_csv(unz(temp, "covid-19-data-master/us-counties.csv"))
+  path <- paste0(here(), "/us-counties.csv")
+  write_csv(us_counties, path, append = FALSE, col_names=TRUE)
+  us_states <- read_csv(unz(temp, "covid-19-data-master/us-states.csv"))
+  path <- paste0(here(), "/us-states.csv")
+  write_csv(us_states, path, append = FALSE, col_names=TRUE)
+  unlink(temp)
+  tail(us_counties)
+  tail(us_states)
+}
 
 ```
 
@@ -92,7 +95,8 @@ if(bVerbose){
 }
 
 # fix for error on 05-06  can't be 25956 dashboard 20828 use that
-new_york$deaths[67]=20828
+# let's watch how changes work out...
+# new_york$deaths[67]=20828
 ```
 
 Note added 2020-05-07. The NYT data set showed a big spike on 2020-05-06 showed
