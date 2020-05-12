@@ -1,7 +1,7 @@
 ---
 title: "Auto Process NY Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-05-11'
+date: 'Started 2020-03-27, Last modified: 2020-05-12'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -146,7 +146,7 @@ plt_ny_tot <- ggplot(new_york, aes(x=date, y=cases)) +
 print(plt_ny_tot)
 ```
 
-Sadly, the curve has not flattened yet. Recall that this is for all of
+The curve is starting to flatten. Recall that this is for all of
 New York State and is **dominated by cases in New York City**.
 
 
