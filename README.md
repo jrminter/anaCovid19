@@ -5,7 +5,28 @@
 This repository is designed to plot the distribution of COVID-19 total
 cases in the State of New York from the Johns Hopkins data.
 
-This is a work in progress.
+
+Files and Folders
+
+- cosma_model: A folder to work through an analysis by Cosma Shazili
+
+- R a folder for various analyses I have run.
+
+  1. This contains the code (Rmd) to automatically process data from the
+     NY Times. This is a work in progress. I update most days..
+     
+  2. This also contains the code (Rmd) to process flu data for
+     Comparison
+     
+  3. I replicated Bob Rudis' analysis
+  
+  4. I processed a recreation of the Fox News plot. Some data is in
+     the `frs` folder.
+  
+  5. I processed the CDC flue data for the 2019-2020 flu season.
+  
+  Plots from these analyses are in the `plt` folder stored as both
+  `.png` and `.jpg` files.
 
 ## Some Interesting resources
 
