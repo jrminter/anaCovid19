@@ -85,3 +85,90 @@ plt_ny_tot <- ggplot(new_york, aes(x=Date, y=Case)) +
 
 print(plt_ny_tot)
 ```
+
+We will save the plot in both the `png` and `jpg` formats.
+
+```{r savePngNY, warning=TRUE, message=FALSE}
+
+x <- here::here()
+
+print(x)
+
+```
+
+strOutPng <- "./plt/NewYork_Covid-19.png"
+
+# we want the png to be close to 1024x768...
+ggsave(plt_ny_tot, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "./plt/NewYork_Covid-19.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(plt_ny_tot, file=strOutJpg, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```
+
+
+Next, process the Monroe County Data
+
+```{r getMonroeCountyData}
+pa_cty <- paste0(here(), "/us-counties.csv")
+df <- read.csv(pa_cty, header = TRUE, sep = ",")
+df$date <- format(as.Date(df$date), "%m-%d")
+tib <- as_tibble(df)
+tib$date <- as.Date(df$date, "%m-%d")
+ny <- tib %>% filter(state == "New York")
+monroe_cty <- ny %>% filter(county == "Monroe")
+monroe_cty  %>% select(date, cases, deaths) -> mc_vals
+tail(mc_vals)
+```
+Next, we compute the total deaths for Monroe County
+
+```{r computeDeathRate}
+
+tot_deaths <- max(monroe_cty$deaths)
+tot_cases <- max(monroe_cty$cases)
+
+death_rate_pct <- 100*tot_deaths/tot_cases
+
+death_rate_pct <- round(death_rate_pct, digits = 2)
+```
+
+
+Monroe County's COVID-19 has `r tot_cases` cases and `r tot_deaths` deaths
+with a death rate of `r death_rate_pct` percent.
+
+Next, we plot the curve.
+
+```{r plotMonroeCounty}
+mc_tot_plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
+              geom_line(colour='darkred', size=2) +
+              xlab("Date") +
+              ylab("Total Cases") + 
+              ggtitle("Monroe County COVID-19 Cases") +
+              labs(caption = 'Data from New York Times') +
+              scale_x_date() +
+              theme(axis.text=element_text(size=8),
+                    axis.title=element_text(size=12),
+                    plot.title=element_text(hjust = 0.5)) +
+              NULL
+
+print(mc_tot_plt)
+```
+
+We will save the plot as in both the `png` and `jpg` formats.
+
+```{r savePng, warning=FALSE, message=FALSE}
+strOutPng <- "plt/Monroe_Cty_Covid-19.png"
+
+# we want the png to be close to 1024x768...
+ggsave(mc_tot_plt, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "plt/Monroe_Cty_Covid-19.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(mc_tot_plt, file=strOutJpg, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```

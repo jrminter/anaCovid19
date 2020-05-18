@@ -1,7 +1,7 @@
 ---
-title: "Auto Process NY Covid-19 Case Data"
+title: "Auto Process New York and Monroe County Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-05-16'
+date: 'Started 2020-03-27, Last modified: 2020-05-18'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -93,26 +93,7 @@ if(bVerbose){
    print(typeof(tib$date))
    print(tib$date)
 }
-
-# fix for error on 05-06  can't be 25956 dashboard 20828 use that
-# let's watch how changes work out...
-# new_york$deaths[67]=20828
 ```
-
-Note added 2020-05-07. The NYT data set showed a big spike on 2020-05-06 showed
-a spike to 25956. The NY Dashboard from 05-07 shows 20828. has to be an error...
-I manually entered that data point. Need to check with NYT.
-
-The NYT explains:
-
-> NEW: Starting with data for May 6th, this data reports the total combined
-> number of confirmed and probable Covid-19 cases and deaths where available.
-> Many states and localities have started to report this data using criteria
-> that were developed by states and the federal government.
-
-Let's see how this goes forward. I **do not like** the "probable cases" without
-justification.
-
 
 Next, we compute the death rate. We really only need the last value in the
 table.
@@ -246,5 +227,75 @@ strOutJpg <- "plt/Covid-19-New-Cases-NY.jpg"
 
 # we want the png to be close to 1024x768...
 ggsave(plt_ny_new_cases, file=strOutJpg, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+```
+
+
+# Process Monroe County Data
+
+Next, load the data file and extract what we need using functions from the
+`dplyr` package to create a `tibble` of values (an enhanced R dataframe that
+works nicely with the `tidyverse` collection of R packages by Hadley Wickham.)
+We will use the `kable` function from the `knitr` package to get a nice looking
+table. We really only want the last few values...
+
+```{r getMonroeCountyData}
+pa_cty <- paste0(here(), "/us-counties.csv")
+df <- read.csv(pa_cty, header = TRUE, sep = ",")
+df$date <- format(as.Date(df$date), "%m-%d")
+tib <- as_tibble(df)
+tib$date <- as.Date(df$date, "%m-%d")
+ny <- tib %>% filter(state == "New York")
+monroe_cty <- ny %>% filter(county == "Monroe")
+monroe_cty  %>% select(date, cases, deaths) -> mc_vals
+tail(mc_vals)
+```
+Next, we compute the total deaths for Monroe County
+
+```{r computeMCDeathRate}
+
+tot_deaths <- max(monroe_cty$deaths)
+tot_cases <- max(monroe_cty$cases)
+
+death_rate_pct <- 100*tot_deaths/tot_cases
+
+death_rate_pct <- round(death_rate_pct, digits = 2)
+```
+
+
+Monroe County's COVID-19 has `r tot_cases` cases and `r tot_deaths` deaths
+with a death rate of `r death_rate_pct` percent.
+
+Next, we plot the curve.
+
+```{r plotMonroeCounty}
+mc_tot_plt <- ggplot(mc_vals, aes(x=date, y=cases)) +
+              geom_line(colour='darkred', size=2) +
+              xlab("Date") +
+              ylab("Total Cases") + 
+              ggtitle("Monroe County COVID-19 Cases") +
+              labs(caption = 'Data from New York Times') +
+              scale_x_date() +
+              theme(axis.text=element_text(size=8),
+                    axis.title=element_text(size=12),
+                    plot.title=element_text(hjust = 0.5)) +
+              NULL
+
+print(mc_tot_plt)
+```
+
+We will save the plot as in both the `png` and `jpg` formats.
+
+```{r saveMCPng, warning=FALSE, message=FALSE}
+strOutPng <- "plt/Monroe_Cty_Covid-19.png"
+
+# we want the png to be close to 1024x768...
+ggsave(mc_tot_plt, file=strOutPng, width=9.0, height=6.0,
+       units="in", dpi=113.7778)
+
+strOutJpg <- "plt/Monroe_Cty_Covid-19.jpg"
+
+# we want the png to be close to 1024x768...
+ggsave(mc_tot_plt, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
