@@ -1,7 +1,7 @@
 ---
 title: "Auto Process New York and Monroe County Covid-19 Case Data"
 author: "John Minter"
-date: 'Started 2020-03-27, Last modified: 2020-05-19'
+date: 'Started 2020-03-27, Last modified: 2020-05-24'
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
@@ -299,3 +299,20 @@ strOutJpg <- "plt/Monroe_Cty_Covid-19.jpg"
 ggsave(mc_tot_plt, file=strOutJpg, width=9.0, height=6.0,
        units="in", dpi=113.7778)
 ```
+
+## Reproducibility
+
+<details><summary>Reproducibility receipt</summary>
+
+```{r}
+## datetime
+Sys.time()
+
+## repository
+git2r::repository()
+
+## session info
+sessionInfo()
+```
+
+</details>
