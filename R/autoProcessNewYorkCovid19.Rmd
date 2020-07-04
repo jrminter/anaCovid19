@@ -1,11 +1,7 @@
 ---
 title: "Auto Process New York and Monroe County Covid-19 Case Data"
 author: "John Minter"
-<<<<<<< HEAD
 date: 'Started 2020-03-27, Last modified: 2020-07-04'
-=======
-date: 'Started 2020-03-27, Last modified: 2020-06-23'
->>>>>>> f8c36e10837dc29c207add6749260bf663bfcdfa
 output:
   html_document:
     css: ../theme/jm-gray-vignette.css
