@@ -1,0 +1,22 @@
+---
+title: "Anaconda"
+author: "John Minter"
+date: '2022-03-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Using Anaconda
+
+Our objective is to use the `Anaconda Power Shell` prompt.
+
+1. Search for `Anaconda Powershell Prompt`
+
+2. Select `run as administrator`
+
+3. Run the command `conda update conda`
+
+4. Run `conda update --all` followed by `yes`, `yes`.

@@ -2,10 +2,4 @@
 .Rhistory
 .RData
 .Ruserdata
-R/*.html
-
 *.html
-
-R/plt/*.jpg
-R/plt/*.png
-
